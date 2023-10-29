@@ -201,4 +201,19 @@ public class UserService {
         int end = Math.min(start + size, list.size());
         return list.subList(start, end);
     }
+
+    public List<String> getFollowers(AuthDto authDto) {
+        if(!authenticateUser(authDto))
+            throw new InvalidCredentialsException("Invalid credentials. Please try again");
+
+        User user = userDAO.findByEmail(authDto.getEmail());
+
+        List<String> list = new LinkedList<>();
+
+        user.getFollowers().forEach(follower -> {
+            list.add(follower.getId() + " " + follower.getName());
+        });
+
+        return list;
+    }
 }

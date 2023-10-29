@@ -61,4 +61,9 @@ public class UserController {
     public Map<String, List<String>> getUserById(@PathVariable long userId) {
         return userService.getUserById(userId);
     }
+
+    @GetMapping("/followers")
+    public List<String> getFollowers(@RequestParam String email, String token) {
+        return userService.getFollowers(new AuthDto(email, token));
+    }
 }
